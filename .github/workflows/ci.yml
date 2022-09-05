@@ -1,0 +1,24 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: build docker Image
+      run: docker build -t nospof/mongodb-ping:${{ github.sha }} .
+    - name: docker tag
+      run: docker tag  nospof/mongodb-ping:${{ github.sha }} nospof/mongodb-ping:latest
+    - name: docker login
+      run : docker login -u ${{ secrets.DOCKERUSERNAME }} -p ${{ secrets.DOCKERPASSWORD }}
+    - name: docker push
+      run: docker push nospof/mongodb-ping:${{ github.sha }}
+    - name: docker push latest
+      run: docker push nospof/mongodb-ping:latest
