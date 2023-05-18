@@ -1,5 +1,7 @@
 # Mongodb ping
 
+mongodb ping allow to check of a mongodb is alive. it s woll be use as init container inside infrastructure to check if dependencies are respected before startup a container.
+
 ## How to use :
 
 You can specify the following env var : 
